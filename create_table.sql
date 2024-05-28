@@ -1,0 +1,42 @@
+
+CREATE TABLE IF NOT EXISTS students(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_name VARCHAR(30),
+    group_id INTEGER,
+    FOREIGN KEY (group_id) REFERENCES groups(id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS groups(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_name VARCHAR(30)
+);
+
+CREATE TABLE IF NOT EXISTS teachers(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    teacher_name VARCHAR(30)
+);
+
+CREATE TABLE IF NOT EXISTS subjects(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    subject_name VARCHAR(30),
+    teacher_id INTEGER,
+    FOREIGN KEY (teacher_id) REFERENCES teachers(id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS grades(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_id INTEGER,
+    subject_id INTEGER,
+    grade REAL,
+    date_of_grade DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (student_id) REFERENCES students(id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subjects(id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+);
